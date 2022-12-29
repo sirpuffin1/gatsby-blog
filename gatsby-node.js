@@ -4,16 +4,34 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
  */
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require('path')
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
-exports.createPages = async ({ actions }) => {
+exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-  createPage({
-    path: "/using-dsg",
-    component: require.resolve("./src/templates/using-dsg.js"),
-    context: {},
-    defer: true,
+  return graphql(`
+  query MyQuery {
+  allMarkdownRemark {
+    edges {
+      node {
+        fields {
+          slug
+        }
+      }
+    }
+  }
+}
+  `).then(result => {
+    result.data.allMarkdownRemark.edges.forEach(({node}) => {
+      createPage({
+        path: node.fields.slug,
+        component: path.resolve(`./src/templates/blog-post.js`),
+        context: {
+          slug: node.fields.slug
+        }
+      })
+    })
   })
 }
 
