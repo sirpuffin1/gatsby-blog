@@ -1,11 +1,21 @@
 import * as React from "react"
-import {  graphql } from "gatsby"
+import {  graphql, Link } from "gatsby"
+import styled from "styled-components"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import * as styles from "../components/index.module.css"
 
 // const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
+
+const BlogLink = styled(Link)`
+  text-decoration: none;
+`
+
+const BlogTitle = styled.h3`
+  margin-bottom: 20px;
+  color: blue;
+`
 
 export default ({ data }) => {
   return (
@@ -16,7 +26,9 @@ export default ({ data }) => {
       {
         data.allMarkdownRemark.edges.map((node) => (
           <div key={node.node.id }>
-              <span>{node.node.frontmatter.title} - {node.node.frontmatter.date}</span>
+            <BlogLink to={node.node.fields.slug}>
+              <BlogTitle>{node.node.frontmatter.title} - {node.node.frontmatter.date}</BlogTitle>
+              </BlogLink>
               <p>{node.node.excerpt}</p>
             </div>
         ))
@@ -34,7 +46,7 @@ export const Head = () => <Seo title="Home" />
 
 export const query = graphql`
   query MyQuery {
-  allMarkdownRemark {
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC}) {
     totalCount
     edges {
       node {
@@ -43,7 +55,9 @@ export const query = graphql`
           date
           title
         }
-        html
+        fields {
+          slug
+        }
         excerpt
       }
     }
