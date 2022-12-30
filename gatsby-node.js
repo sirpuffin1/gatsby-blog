@@ -8,31 +8,68 @@ const path = require('path')
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
-  return graphql(`
-  query MyQuery {
-  allMarkdownRemark {
-    edges {
-      node {
-        fields {
-          slug
+
+  const tagTemplate = path.resolve("src/templates/tags.js")
+  const blogPostTemplate = path.resolve(`./src/templates/blog-post.js`)
+
+  const result = await graphql(`
+    {
+      postsRemark: allMarkdownRemark(
+        sort: { frontmatter: { date: DESC }}
+        limit: 200
+      ) {
+        edges {
+          node {
+            fields {
+              slug
+            }
+            frontmatter {
+              tags
+            }
+          }
+        }
+      }
+      tagsGroup: allMarkdownRemark(limit: 200) {
+        group(field: { frontmatter: { tags: SELECT }}) {
+          fieldValue
         }
       }
     }
+  `)
+
+  if(result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
   }
-}
-  `).then(result => {
-    result.data.allMarkdownRemark.edges.forEach(({node}) => {
-      createPage({
-        path: node.fields.slug,
-        component: path.resolve(`./src/templates/blog-post.js`),
-        context: {
-          slug: node.fields.slug
-        }
-      })
+
+  console.log(result.data.postsRemark)
+
+  const posts = result.data.postsRemark.edges
+
+  posts.forEach(({node}) => {
+    createPage({
+      path: node.fields.slug,
+      component: blogPostTemplate,
+      context: {
+        slug: node.fields.slug
+      }
     })
   })
+
+  const tags = result.data.tagsGroup.group
+
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${tag.fieldValue}/`,
+      component: tagTemplate,
+      context: {
+        tag: tag.fieldValue,
+      }
+    })
+  })
+  
 }
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
