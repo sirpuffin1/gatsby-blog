@@ -9,7 +9,6 @@ const Header = ({ siteTitle }) => (
       display: `flex`,
       alignItems: `center`,
       justifyContent: `space-between`,
-      background: "rgb(34,56,195)",
       background:
         "linear-gradient(0deg, rgba(34,56,195,1) 0%, rgba(143,129,241,1) 100%)",
     }}

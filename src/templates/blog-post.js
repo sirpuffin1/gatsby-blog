@@ -1,16 +1,19 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Layout from '../components/layout'
+import * as styles from "../components/index.module.css"
 
 export default ({ data }) => {
     const post = data.markdownRemark;
+    const publishedDate = new Date(post.frontmatter.date).toLocaleDateString()
     return (
         <Layout>
-            <div>
-                <h1>{post.frontmatter.title}</h1>
+           
+                <h1>{post.frontmatter.title} - {publishedDate}</h1>
+                <Link to={`../tags/${post.frontmatter.tags}`} className={styles.taggy}>
+                    {post.frontmatter.tags}
+                    </Link>
                 <div dangerouslySetInnerHTML={{ __html: post.html}} />
-            </div>
-
         </Layout>
     )
     }
@@ -22,6 +25,8 @@ export const query = graphql`
             html
             frontmatter {
                 title
+                tags
+                date
             }
         }
     }

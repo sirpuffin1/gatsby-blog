@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { Link, graphql } from "gatsby"
+import Layout from "../components/layout"
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
@@ -11,6 +12,7 @@ const Tags = ({ pageContext, data }) => {
   } tagged with "${tag}"`
 
   return (
+    <Layout>
     <div>
       <h1>{tagHeader}</h1>
       <ul>
@@ -26,6 +28,7 @@ const Tags = ({ pageContext, data }) => {
       </ul>
       <Link to="/tags">All tags</Link>
     </div>
+    </Layout>
   )
 }
 

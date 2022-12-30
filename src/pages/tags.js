@@ -8,13 +8,9 @@ import Layout from "../components/layout"
 const TagsPage = ({
   data: {
     allMarkdownRemark: { group },
-    site: {
-      siteMetadata: { title },
-    },
   },
 }) => (
     <Layout>
-  <div>
     <div>
       <h1>Tags</h1>
       <ul>
@@ -27,7 +23,6 @@ const TagsPage = ({
         ))}
       </ul>
     </div>
-  </div>
   </Layout>
 )
 
@@ -53,11 +48,6 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(limit: 200) {
       group(field: { frontmatter: { tags: SELECT } }) {
         fieldValue

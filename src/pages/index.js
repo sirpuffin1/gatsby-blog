@@ -23,12 +23,21 @@ const BlogTitle = styled.h2`
 export default ({ data }) => {
   return (
   <Layout>
+    <div className={styles.tagsContainer}>
+      {
+        data.allMarkdownRemark.edges.map(({node}) => (
+            <Link to={`tags/${node.frontmatter.tags}`} className={styles.taggy} key={node.frontmatter.tags}>
+            {node.frontmatter.tags}
+            </Link>
+        ))
+      }
+    </div>
     <div className={styles.textCenter}>
       {
         data.allMarkdownRemark.edges.map((node) => (
           <div key={node.node.id }>
             <BlogLink to={node.node.fields.slug}>
-              <BlogTitle>{node.node.frontmatter.title}</BlogTitle>
+              <BlogTitle>{node.node.frontmatter.title} - {new Date(node.node.frontmatter.date).toLocaleDateString()}</BlogTitle>
               </BlogLink>
               <p>{node.node.excerpt}</p>
             </div>
@@ -55,6 +64,7 @@ export const query = graphql`
         frontmatter {
           date
           title
+          tags
         }
         fields {
           slug
