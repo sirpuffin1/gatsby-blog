@@ -10,24 +10,25 @@ import * as styles from "../components/index.module.css"
 
 const BlogLink = styled(Link)`
   text-decoration: none;
+  background: -webkit-linear-gradient(#eee, #333);
 `
 
-const BlogTitle = styled.h3`
+const BlogTitle = styled.h2`
   margin-bottom: 20px;
-  color: blue;
+  background: -webkit-linear-gradient(#94bbe9, #d88cd9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 
 export default ({ data }) => {
   return (
   <Layout>
     <div className={styles.textCenter}>
-      <h1>Angel's thoughts</h1>
-      <h4>{data.allMarkdownRemark.totalCount}</h4>
       {
         data.allMarkdownRemark.edges.map((node) => (
           <div key={node.node.id }>
             <BlogLink to={node.node.fields.slug}>
-              <BlogTitle>{node.node.frontmatter.title} - {node.node.frontmatter.date}</BlogTitle>
+              <BlogTitle>{node.node.frontmatter.title}</BlogTitle>
               </BlogLink>
               <p>{node.node.excerpt}</p>
             </div>

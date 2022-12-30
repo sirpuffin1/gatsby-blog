@@ -9,7 +9,7 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `The Angel Cruz's Deepest Darkest Thoughts/ Tech Stuff or the ACDTTS Blog`,
+    title: `Angel's Little Blog`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
