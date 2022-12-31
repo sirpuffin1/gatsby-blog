@@ -13,7 +13,7 @@ export default ({ data }) => {
                 <Link to={`../tags/${post.frontmatter.tags}`} className={styles.taggy}>
                     {post.frontmatter.tags}
                     </Link>
-                <div dangerouslySetInnerHTML={{ __html: post.html}} />
+                <div className={styles.postContentContainer} dangerouslySetInnerHTML={{ __html: post.html}} />
         </Layout>
     )
     }
