@@ -1,7 +1,7 @@
 ---
 title: "The Glorious Second Post"
-date: "12/30/2022"
-tags: ["General"]
+date: "01/02/2023"
+tags: "General"
 ---
 
 *Okay so.* I kinda sorta did want to do a post at least once a day but I already failed. But that's okay! We move forward. Plus, come on. It's the holidays. Or at least it *was*. 

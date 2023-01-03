@@ -1,7 +1,7 @@
 ---
 title: "Welcome To My Blog!"
 date: "12/30/2022"
-tags: ["General"]
+tags: "General"
 ---
 I so badly want to start with `Hello world!`, but I'm not going to do that. I'm not much of a writer and I definitely don't plan to start being one now, **BUT** I did want to create this blog to document my journey navigating this crazy and unpredictable tech world. After taking some time to really build on the skills I developed over the last year or so, I feel extremely confident and ready to get back on/eat the horse. 
 

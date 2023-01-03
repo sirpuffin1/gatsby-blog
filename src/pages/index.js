@@ -21,13 +21,20 @@ const BlogTitle = styled.h2`
 `
 
 export default ({ data }) => {
+  const postTags = [];
+
+  data.allMarkdownRemark.edges.forEach(({node}) => {
+    postTags.push(node.frontmatter.tags)
+  })
+  
+  const uniquePostTags = new Set(postTags)
   return (
   <Layout>
     <div className={styles.tagsContainer}>
       {
-        data.allMarkdownRemark.edges.map(({node}) => (
-            <Link to={`tags/${node.frontmatter.tags}`} className={styles.taggy} key={node.frontmatter.tags}>
-            {node.frontmatter.tags}
+        [...uniquePostTags].map((tag) => (
+            <Link to={`tags/${tag}`} className={styles.taggy} key={tag}>
+            {tag}
             </Link>
         ))
       }
@@ -56,7 +63,7 @@ export const Head = () => <Seo title="Home" />
 
 export const query = graphql`
   query MyQuery {
-  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC}) {
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC}) {
     totalCount
     edges {
       node {
