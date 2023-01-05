@@ -23,6 +23,15 @@ const BlogTitle = styled.h2`
 export default ({ data }) => {
   const postTags = [];
 
+  const dateEditor = (date) => {
+    let newDate = new Date(date);
+    let day = newDate.getDate();
+    let month = newDate.getMonth();
+    let year = newDate.getFullYear();
+
+    return `${month + 1}/${day + 1}/${year}`
+  }
+
   data.allMarkdownRemark.edges.forEach(({node}) => {
     postTags.push(node.frontmatter.tags)
   })
@@ -44,7 +53,7 @@ export default ({ data }) => {
         data.allMarkdownRemark.edges.map((node) => (
           <div key={node.node.id }>
             <BlogLink to={node.node.fields.slug}>
-              <BlogTitle>{node.node.frontmatter.title} - {new Date(node.node.frontmatter.date).toLocaleDateString()}</BlogTitle>
+              <BlogTitle>{node.node.frontmatter.title} - {dateEditor((node.node.frontmatter.date))}</BlogTitle>
               </BlogLink>
               <p>{node.node.excerpt}</p>
             </div>
@@ -63,7 +72,7 @@ export const Head = () => <Seo title="Home" />
 
 export const query = graphql`
   query MyQuery {
-  allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC}) {
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC}) {
     totalCount
     edges {
       node {

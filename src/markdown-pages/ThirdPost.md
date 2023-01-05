@@ -1,6 +1,6 @@
 ---
 title: "The Officially Late Third Post"
-date: "01/04/2023"
+date: "2023-01-04"
 tags: "Dream Journal"
 ---
 

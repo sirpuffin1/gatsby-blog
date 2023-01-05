@@ -1,6 +1,6 @@
 ---
 title: "The Glorious Second Post"
-date: "01/02/2023"
+date: "2023-01-02"
 tags: "General"
 ---
 
